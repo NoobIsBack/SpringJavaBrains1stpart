@@ -1,0 +1,86 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+  <bean id="triangle" class="com.maven.Spring.Triangle">
+        <property name="type" value="EQUILATERAL"/>   <!-- this is setter injection -->
+  </bean>
+  
+  
+  <bean id="triangleConstructor" class="com.maven.Spring.TriangleConstructor">
+  	<constructor-arg value="EQUILATERAL CONSTRUCTOR"/>
+  	<constructor-arg  value="20"/>
+  </bean>
+  
+   <!-- List  Bean Injection -->
+  <bean id="triangleCollection" class="com.maven.Spring.TriangleCollection">
+  <property name="pointList">
+  <list>
+  <ref bean="zeroPoint"/>
+  <ref bean ="point2"/>
+  <ref bean="point3"/>
+  </list>
+  </property>
+  </bean>
+  
+  
+  
+  <bean id="triangleObjectInjection" class="com.maven.Spring.TriangleObjectInjection">
+   <property name="pointA" ref="zeroPoint"/><!-- this is the refernce to the PointA -->
+   <property name="pointB" ref="point2"/>
+   <property name="pointC" ref="point3"/>
+  </bean>
+  <bean id="zeroPoint" class="com.maven.Spring.Point">
+   <property name="x" value="0"/>
+    <property name="y" value="0"/>
+  </bean>
+  <bean id="point2" class="com.maven.Spring.Point">
+  <property name="x" value="-20"/>
+  <property name="y" value="0"/>
+  </bean>
+  <bean id="point3" class="com.maven.Spring.Point">
+  <property name="x" value="30"/>
+  <property name="y" value="40"/>
+  </bean>
+  
+ <!-- Autoworing  ByName-->
+ 
+ <bean id="triangleAutoWireByName" class="com.maven.Spring.TriangleAutoWireByName" autowire="byName">
+ </bean>
+ 
+ 
+  <bean id="pointA" class="com.maven.Spring.Point">
+   <property name="x" value="0"/>
+    <property name="y" value="0"/>
+  </bean>
+  <bean id="pointB" class="com.maven.Spring.Point">
+  <property name="x" value="-20"/>
+  <property name="y" value="0"/>
+  </bean>
+  <bean id="pointC" class="com.maven.Spring.Point">
+  <property name="x" value="30"/>
+  <property name="y" value="40"/>
+  </bean>
+  
+  <!-- Call back functions -->
+  <bean id ="triangleBeanProcessor" class="com.maven.Spring.TriangleBeanProcessor" autowire="byName" init-method="myInit" destroy-method="myDestroy" >
+     
+  </bean>
+  
+  <!--  <bean class="com.maven.Spring.DisplayNamePostProcessor"/>   -->
+  
+  
+  
+<!--coding with interaces this s how it should work -->
+<bean id ="triangleWithInterface" class="com.maven.Spring.TriangleWithInterface">
+  <property name="pointA" ref="pointA"/>
+</bean>
+
+<bean id="circleWithInterface" class="com.maven.Spring.CircleWithInterface">
+<property name="center" ref="pointA"/>
+</bean>
+  
+  
+  
+ </beans>
